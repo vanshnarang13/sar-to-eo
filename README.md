@@ -10,7 +10,7 @@ Squeeze and Excitation residual blocks) with a Transformer branch (global contex
 judged by a three scale spectral norm PatchGAN. It is trained with adversarial, L1, VGG perceptual
 and terrain classification losses. The baseline uses a standard global attention ViT branch; two
 controlled ablations are provided: one replaces the global attention with windowed Swin attention,
-and one halves the L1 weight from 80 to 40. See `report.pdf` / `report.docx` for the full write up.
+and one halves the L1 weight from 80 to 40.
 
 ## Requirements
 
@@ -110,13 +110,11 @@ python eval.py  --pred_dir outputs/preds   --gt_dir sample_test/eo
 
 ## Model weights
 
-Public download link for the final checkpoint: **[ADD LINK]** (Hugging Face Hub or Google Drive,
-publicly accessible with no request-access step).
+Public download link for the final checkpoint: **https://drive.google.com/drive/folders/10Erppi0p5rXpB6VJMJhZy6fjbCKFry9m?usp=drive_link** 
 
 ## Results
-
-Validation metrics on the scene disjoint split (final epoch 150 for every model, so all are compared
-at the same point in training; all four metrics from that same epoch):
+Across all the triplets the same pattern holds. The high frequency content, meaning edges, field boundaries, ridge lines and river networks, transfers across correctly, because that information is genuinely present in the SAR. The low frequency content, meaning the overall colour and tone, is where the outputs drift, because that is the part the SAR does not determine and the model has to guess from learned priors. This is the visual signature of the same pixel versus perceptual story the metrics tell: structure is largely solved, colour is the open problem.
+Validation metrics on the scene disjoint split (final epoch 150 for every model, so all are compared at the same point in training; all four metrics from that same epoch):
 
 | Model | LPIPS | FID | SSIM | PSNR |
 |---|---|---|---|---|
@@ -138,7 +136,6 @@ Over the full split the test FID (98 to 105) is close to the validation FID abov
 much higher values on the 420 image sample were small-sample bias; the per-image LPIPS, SSIM and PSNR
 are directly comparable across splits.
 
-Training and validation loss curves are saved per run at `outputs/runs/<run_name>/loss_curve.png`.
 
 ## Repository layout
 

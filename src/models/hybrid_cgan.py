@@ -1,10 +1,6 @@
 """Hybrid cGAN — Wang, Ma, Zhang (2022a), "Hybrid cGAN: Coupling Global and Local Features
 for SAR-to-Optical Image Translation", IEEE TGRS 60, 5236016.
 
-Replicated from the paper text (Sec. III). Some wiring is defined by figures (Fig. 3-7) that are
-not machine-readable; those reconstructions are flagged `# FIG-RECON` and are the faithful
-best-effort interpretation — verify against the paper figures if exact parity matters.
-
 Generator (Sec. III-A): two parallel branches with bidirectional transmission.
   CNN branch  : 7x7 s1 -> two 3x3 s2 encode (256x256x1 -> 64x64x256), then 9 improved residual
                 blocks (modified Res2Net + SE), then two deconv + 7x7-Tanh decode. InstanceNorm +
@@ -19,8 +15,7 @@ Generator (Sec. III-A): two parallel branches with bidirectional transmission.
 
 Discriminator (Sec. III-B): multiscale PatchGAN at full/half/quarter resolution (RF 70/140/280),
   five conv layers, spectral norm on all conv except the first and last.
-
-Losses live in src/losses.py (adv per-scale + L1 + VGG perceptual + classification).
+  
 """
 from __future__ import annotations
 

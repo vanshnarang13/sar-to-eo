@@ -1,20 +1,4 @@
-"""Swin Transformer blocks — windowed (W-MSA) and shifted-window (SW-MSA) self-attention with a
-learned relative-position bias. Used as a grounded drop-in replacement for the global-MHSA
-`ViTBlock` in the Hybrid cGAN generator's transformer branch (controlled architecture ablation:
-*only* the attention mechanism changes).
 
-Grounding (per the project HARD RULE — research-grounded values only):
-  - W-MSA + SW-MSA alternated per block, with a learned relative-position-bias table and a cyclic
-    shift of window//2 plus an attention mask: this *is* the canonical definition of a Swin block —
-    Liu et al. 2021, "Swin Transformer: Hierarchical Vision Transformer using Shifted Windows",
-    ICCV. # SOURCED: Liu 2021 Sec. 3.2 (eqs. 3-4, relative position bias).
-  - Window size(s) drawn from {2, 4, 8} on the 16x16 token grid: Kong et al. 2022 (Multi-Scale
-    SAR->optical translation) — its Swin pyramid layer (STPL) uses window sizes 2/4/8.
-    # SOURCED: Kong 2022 — window sizes {2,4,8}. Exact per-block scheme is config-driven and
-    # marked ASSUMED-PENDING-APPROVAL in configs/hybrid_cgan_swin.yaml.
-  - depth=12, dim=384, heads=6 are kept identical to the ViT branch they replace (controlled
-    ablation principle — not a new hyperparameter).
-"""
 from __future__ import annotations
 
 import torch
