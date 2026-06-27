@@ -1,0 +1,46 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+.venv/
+venv/
+.env
+
+# Datasets (large; rebuilt via scripts/build_dataset.py + build_final_dataset.py)
+data/
+flat_test/
+
+# Source papers (copyrighted PDFs, not redistributable)
+papers/
+
+# Experiment tracking
+wandb/
+
+# Model checkpoints (hosted separately, e.g. Hugging Face)
+*.pt
+*.pth
+*.ckpt
+
+# Inference outputs / scratch (kept: outputs/runs/*/loss_curve.png + losses.csv/json)
+outputs/preds/
+outputs/fulltest_*
+outputs/test_*
+*.log
+
+# Report artifacts (submitted separately, not in the code repo)
+report.md
+report.docx
+report.pdf
+
+# Internal working notes (not part of the public repo)
+CLAUDE.md
+APPROACHES.md
+EDGE_CASES.md
+
+# Stray screenshots
+Screenshot *.png
+*Screenshot*.png

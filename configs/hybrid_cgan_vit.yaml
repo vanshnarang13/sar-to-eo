@@ -1,0 +1,63 @@
+# Hybrid cGAN — ViT baseline for the Swin ablation. IDENTICAL to configs/hybrid_cgan_swin.yaml in
+# every respect EXCEPT the transformer branch: global-MHSA ViT blocks WITH a learnable class token
+# (Wang 2022a), vs. the Swin variant's windowed blocks. This is the controlled counterpart — pair it
+# with hybrid_cgan_swin.yaml and the only difference is attn (vit vs swin) + its consequence
+# (class-token head vs GAP head). Same bs/schedule/losses so the comparison is clean.
+run_name: hybrid_cgan_vit
+seed: 42
+device: auto
+compile: false
+out_dir: outputs/runs/hybrid_cgan_vit
+
+data:
+  volume_split: final_dataset
+  train_root: data/final_dataset/train
+  val_root: data/final_dataset/val
+  test_root: data/final_dataset/test
+  augment: true
+  max_train: null
+  max_val: null
+
+model:
+  arch: hybrid
+  attn: vit                        # <-- the only architectural change vs hybrid_cgan_swin.yaml
+                                   #     global MHSA + learnable class token (Wang 2022a)
+  ngf: 64
+  ndf: 64
+  num_D: 3                         # multiscale D1/D2/D3 (RF 70/140/280)
+  n_res: 9                         # improved Res2Net+SE residual blocks (paper)
+  vit_depth: 12                    # ViT blocks (paper)
+  vit_dim: 384                     # embedding dim (paper)
+  vit_heads: 6                     # MHSA heads (paper)
+  norm: instance                   # paper: InstanceNorm
+  classes: [agri, barren, grass, urban, forest, water, shrub]   # 7 SEN12MS terrains (cls loss)
+
+loss:
+  gan_mode: vanilla
+  lambda_gan: 1.0
+  lambda_l1: 80.0                  # paper lambda1 = 80
+  lambda_perc: 2.0                 # paper lambda2 = 2 (VGG perceptual)
+  lambda_cls: 1.0
+  lambda_fm: 0.0
+  lambda_style: 0.0
+  label_smoothing: 0.0
+
+train:
+  epochs: 200                      # Wang 2022a schedule shape (200 const + 200 decay) scaled to 200ep
+  batch_size: 16                   # held identical to the swin run for a fair comparison
+  lr: 0.0002                       # SOURCED: Wang 2022a — lr 2e-4 (Adam, beta1 0.5)
+  grad_clip: 0.0
+  lr_decay_start_frac: 0.5         # SOURCED: Wang 2022a — constant lr first half, linear decay to 0
+                                   #   second half. At 200 epochs: constant 1-100, decay 100->200.
+  amp: true
+  num_workers: 8
+  log_every: 50
+  val_every: 2
+  val_metric_batches: null
+  compute_fid: true
+
+wandb:
+  project: galaxeye-sar2eo
+  group: hybrid_cgan
+  tags: [hybrid_cgan, vit, cnn_vit, multiscale_d, spectral_norm, ablation, baseline]
+  mode: online

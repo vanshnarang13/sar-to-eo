@@ -1,0 +1,24 @@
+# Core (training + inference)
+torch==2.8.0
+torchvision==0.23.0
+numpy==2.0.2
+pillow==11.3.0
+pyyaml==6.0.3
+tqdm==4.67.3
+scipy==1.13.1
+
+# Metrics (LPIPS / FID / SSIM / PSNR)
+lpips==0.1.4
+torchmetrics==1.8.2
+torch-fidelity==0.4.0
+pytorch-fid==0.3.0
+
+# Experiment tracking
+wandb==0.26.1
+
+# EDA / reporting
+matplotlib==3.9.4
+pandas==2.3.3
+nbformat==5.10.4
+nbclient==0.10.2
+ipykernel==6.31.0

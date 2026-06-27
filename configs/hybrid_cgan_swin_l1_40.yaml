@@ -1,0 +1,67 @@
+# Hybrid cGAN — SWIN ablation. Identical to configs/hybrid_cgan.yaml in every respect EXCEPT the
+# transformer branch: the 12 global-MHSA ViT blocks are replaced by windowed/shifted-window Swin
+# blocks (W-MSA + SW-MSA, relative position bias). Controlled architecture ablation isolating the
+# attention mechanism. Grounding: Swin block = Liu 2021 (ICCV); window sizes {2,4,8} = Kong 2022.
+# Everything else (CNN branch, DS/US transmission, multiscale spectral-norm D, losses, optim,
+# schedule) is held fixed so the comparison is clean.
+run_name: hybrid_cgan_swin_l1_40
+seed: 42
+device: auto
+compile: false
+out_dir: outputs/runs/hybrid_cgan_swin_l1_40
+
+data:
+  volume_split: final_dataset
+  train_root: data/final_dataset/train
+  val_root: data/final_dataset/val
+  test_root: data/final_dataset/test
+  augment: true                    # SOURCED: pix2pix flip+90deg rot (held identical to baseline run)
+  max_train: null
+  max_val: null
+
+model:
+  arch: hybrid
+  attn: swin                       # <-- the only architectural change vs hybrid_cgan.yaml
+  swin_windows: [2,4,8]            # SOURCED: Kong 2022 — multi-scale window set {2,4,8}, cycled across
+                                   #   the 12 blocks (each scale x4): w=2 (64 win), 4 (16 win), 8 (4 win).
+                                   #   Odd blocks shift by window//2 (SW-MSA). Uses the whole grounded
+                                   #   set rather than picking one value. (User-approved 2026-06-25.)
+  ngf: 64
+  ndf: 64
+  num_D: 3                         # multiscale D1/D2/D3 (RF 70/140/280)
+  n_res: 9                         # improved Res2Net+SE residual blocks (paper)
+  vit_depth: 12                    # Swin blocks (held = ViT depth; controlled ablation)
+  vit_dim: 384                     # embedding dim (held = ViT; controlled ablation)
+  vit_heads: 6                     # MHSA heads (held = ViT; controlled ablation)
+  norm: instance                   # paper: InstanceNorm
+  classes: [agri, barren, grass, urban, forest, water, shrub]   # 7 SEN12MS terrains (cls loss)
+
+loss:
+  gan_mode: vanilla
+  lambda_gan: 1.0
+  lambda_l1: 40.0                  # ABLATION: half the paper's lambda1=80
+  lambda_perc: 2.0                 # paper lambda2 = 2 (VGG perceptual)
+  lambda_cls: 1.0
+  lambda_fm: 0.0
+  lambda_style: 0.0
+  label_smoothing: 0.0
+
+train:
+  epochs: 150                      # 150 total: constant LR 1–100, linear decay 101–150
+  batch_size: 16                   # held identical to the baseline run for a fair comparison
+  lr: 0.0002                       # SOURCED: Wang 2022a — lr 2e-4 (Adam, beta1 0.5)
+  grad_clip: 0.0
+  lr_decay_start_frac: 0.6667      # decay_start = int(0.6667×150) = 100 → constant 1-100, decay 101-150
+                                   # SOURCED: Wang 2022a schedule shape; adapted to 150ep budget.
+  amp: true
+  num_workers: 8
+  log_every: 50
+  val_every: 2
+  val_metric_batches: null
+  compute_fid: true
+
+wandb:
+  project: galaxeye-sar2eo
+  group: hybrid_cgan
+  tags: [hybrid_cgan, swin, cnn_swin, multiscale_d, spectral_norm, ablation]
+  mode: online

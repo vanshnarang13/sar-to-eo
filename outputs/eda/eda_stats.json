@@ -1,0 +1,241 @@
+{
+  "n_pairs_total": 16000,
+  "inventory": {
+    "agri": {
+      "pairs": 4000,
+      "n_scenes": 6,
+      "scene_sizes": [
+        1370,
+        886,
+        800,
+        527,
+        288,
+        129
+      ],
+      "largest_scene_frac": 0.343,
+      "seasons": {
+        "summer": 1370,
+        "fall": 2630
+      }
+    },
+    "barrenland": {
+      "pairs": 4000,
+      "n_scenes": 7,
+      "scene_sizes": [
+        1080,
+        930,
+        900,
+        391,
+        350,
+        284,
+        65
+      ],
+      "largest_scene_frac": 0.27,
+      "seasons": {
+        "fall": 4000
+      }
+    },
+    "grassland": {
+      "pairs": 4000,
+      "n_scenes": 6,
+      "scene_sizes": [
+        1250,
+        1213,
+        1088,
+        342,
+        75,
+        32
+      ],
+      "largest_scene_frac": 0.312,
+      "seasons": {
+        "fall": 4000
+      }
+    },
+    "urban": {
+      "pairs": 4000,
+      "n_scenes": 13,
+      "scene_sizes": [
+        794,
+        651,
+        491,
+        364,
+        334,
+        291,
+        287,
+        276,
+        150,
+        136,
+        127,
+        81,
+        18
+      ],
+      "largest_scene_frac": 0.199,
+      "seasons": {
+        "fall": 4000
+      }
+    }
+  },
+  "n_scenes_total": 32,
+  "scene_size_min": 18,
+  "scene_size_max": 1370,
+  "scene_size_median": 346.0,
+  "sar_stats": {
+    "agri": {
+      "mean": 129.95892333984375,
+      "std": 51.9131965637207,
+      "min": 0.0,
+      "max": 255.0,
+      "p1": 4.0,
+      "p99": 252.0,
+      "speckle_cov_mean": 0.26488954225962297
+    },
+    "barrenland": {
+      "mean": 123.22339630126953,
+      "std": 54.90522384643555,
+      "min": 0.0,
+      "max": 255.0,
+      "p1": 0.0,
+      "p99": 255.0,
+      "speckle_cov_mean": 0.28349541460629357
+    },
+    "grassland": {
+      "mean": 124.08076477050781,
+      "std": 46.64325714111328,
+      "min": 0.0,
+      "max": 255.0,
+      "p1": 3.0,
+      "p99": 245.0,
+      "speckle_cov_mean": 0.23435903316580678
+    },
+    "urban": {
+      "mean": 157.00050354003906,
+      "std": 49.55738830566406,
+      "min": 0.0,
+      "max": 255.0,
+      "p1": 20.0,
+      "p99": 255.0,
+      "speckle_cov_mean": 0.2010013828038277
+    }
+  },
+  "eo_stats": {
+    "agri": {
+      "mean_rgb": [
+        75.9820327758789,
+        75.43702697753906,
+        71.7646713256836
+      ],
+      "std_rgb": [
+        57.716243743896484,
+        52.406246185302734,
+        53.3812370300293
+      ]
+    },
+    "barrenland": {
+      "mean_rgb": [
+        109.22666931152344,
+        97.89493560791016,
+        93.4151382446289
+      ],
+      "std_rgb": [
+        52.574710845947266,
+        52.742950439453125,
+        52.864105224609375
+      ]
+    },
+    "grassland": {
+      "mean_rgb": [
+        55.82966232299805,
+        72.20392608642578,
+        46.31924819946289
+      ],
+      "std_rgb": [
+        42.30531311035156,
+        47.06953430175781,
+        35.28581237792969
+      ]
+    },
+    "urban": {
+      "mean_rgb": [
+        70.83785247802734,
+        69.50548553466797,
+        65.66328430175781
+      ],
+      "std_rgb": [
+        54.071876525878906,
+        52.289058685302734,
+        53.1568717956543
+      ]
+    }
+  },
+  "sar_optical_luminance_corr_mean": -0.041202828000999905,
+  "sar_optical_luminance_corr_std": 0.2825396052586558,
+  "sampled_per_terrain": 600,
+  "leakage": {
+    "sar_intra_mean_abs_diff": 53.49113296508789,
+    "sar_inter_mean_abs_diff": 62.30832035064697,
+    "sar_ratio_inter_over_intra": 1.1648345385856618,
+    "eo_intra_colorhist_dist": 0.5584907531709874,
+    "eo_inter_colorhist_dist": 0.8704613494828773,
+    "eo_ratio_inter_over_intra": 1.5585930222614721
+  },
+  "splits": {
+    "random": {
+      "train": {
+        "n": 12800,
+        "by_terrain": {
+          "agri": 3188,
+          "urban": 3167,
+          "grassland": 3243,
+          "barrenland": 3202
+        }
+      },
+      "val": {
+        "n": 1600,
+        "by_terrain": {
+          "barrenland": 404,
+          "grassland": 366,
+          "urban": 432,
+          "agri": 398
+        }
+      },
+      "test": {
+        "n": 1600,
+        "by_terrain": {
+          "barrenland": 394,
+          "grassland": 391,
+          "agri": 414,
+          "urban": 401
+        }
+      }
+    },
+    "scene": {
+      "train": {
+        "n": 10454,
+        "by_terrain": {
+          "agri": 3056,
+          "barrenland": 2010,
+          "grassland": 2463,
+          "urban": 2925
+        }
+      },
+      "val": {
+        "n": 3469,
+        "by_terrain": {
+          "agri": 527,
+          "barrenland": 1291,
+          "grassland": 1088,
+          "urban": 563
+        }
+      },
+      "test": {
+        "n": 2077,
+        "by_terrain": {
+          "agri": 417,
+          "barrenland": 699,
+          "grassland": 449,
+          "urban": 512
+        }
+      }
+    }
+  }
+}
