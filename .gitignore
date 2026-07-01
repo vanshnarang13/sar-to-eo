@@ -31,16 +31,3 @@ outputs/fulltest_*
 outputs/test_*
 *.log
 
-# Report artifacts (submitted separately, not in the code repo)
-report.md
-report.docx
-report.pdf
-
-# Internal working notes (not part of the public repo)
-CLAUDE.md
-APPROACHES.md
-EDGE_CASES.md
-
-# Stray screenshots
-Screenshot *.png
-*Screenshot*.png
