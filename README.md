@@ -1,6 +1,6 @@
 # SAR to EO Image Translation
 
-I translate a Sentinel 1 SAR (VV) patch into the matching Sentinel 2 optical (RGB) image. The task
+This project aims to translate a Sentinel 1 SAR (VV) patch into the matching Sentinel 2 optical (RGB) image. The task
 is ill posed: SAR carries no colour or spectral information, so a single SAR input is consistent with
 many plausible optical outputs. The model is therefore ranked on perceptual metrics (LPIPS and FID),
 with pixel metrics (SSIM and PSNR) reported as secondary diagnostics. A private held out set of
