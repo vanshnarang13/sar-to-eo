@@ -1,0 +1,5 @@
+# Exclude Jupyter notebooks from GitHub's language statistics.
+# The EDA notebook embeds base64 plot outputs, which otherwise dominate
+# the language bar and mislabel this Python project as "Jupyter Notebook".
+notebooks/** linguist-documentation
+*.ipynb linguist-documentation
